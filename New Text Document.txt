@@ -1,0 +1,88 @@
+RESTful HTTP Request and Response Examples
+This section provides examples of RESTful HTTP Request and Response.
+
+The RESTful HTTP Requests are categorized according to method types as the following:
+
+POST Method
+GET Method
+PUT Method
+DELETE Method
+Note: Examples are in the pairs of RESTful HTTP Request and Response.
+POST Method
+The RESTful HTTP Request POST method is equivalent to Create functions and INSERT SQL statement.
+
+The following example is to insert a new partner, Partner1, in ConfigStore database.
+
+HTTP Message Type	Example
+Request	http://localhost:8090/tpmRest/v1/participants/participant?isHost=false&name=partner1&isActive=true
+Response	
+Successful operation response:{"result":"Operate successfully"}
+Failed operation response:{"errorMessage":"XXXXXX"}
+GET Method
+The RESTful HTTP Request GET method is equivalent to the Retrieve functions and Select SQL statement.
+
+This following example is to retrieve values of enabled EZComm protocol of partner Buyer:
+
+HTTP Message Type	Example
+Request	http://localhost:8090/tpmRest/v1/participants/enabledProtocolPropertyValues?participantName=Buyer &protocol=EZComm&names=["AllowOverrideFilename","dupDetectOutbound","dupDetectInbound"]
+Response	{"result": [ false, false, false ]}
+This following example is to retrieve enabled EZComm protocol property names from a partner:
+
+HTTP Message Type	Example
+Request	http://localhost:8090/tpmRest/v1/participants/partnerpropertydefinitions?protocol=EZComm
+Response	{"result":[{"defaultValue":null,"displayName":"Allow override of filename via HTTP parameter","name":"AllowOverrideFilename","type":"boolean"}, {"defaultValue":null,"displayName":"Duplicate Detection for Outbound","name":"dupDetectOutbound","type":"boolean"}, {"defaultValue":null,"displayName":"Duplicate Detection for Inbound","name":"dupDetectInbound","type":"boolean"}, {"defaultValue":null,"displayName":"Use tibXML Packaging","name":"tibXMLPublicMsgFormat","type":"boolean"}, {"defaultValue":null,"displayName":"Store and Forward Authentication Mode","name":"SFAuthenticationMode","type":"string"}, {"defaultValue":null,"displayName":"Store and Forward Authentication Mode Proxy Agent","name":"ProxySFAuthenticationMode","type":"string"} ]}
+This following example is to retrieve enabled EZComm protocol transport properties of partner Partner1:
+
+HTTP Message Type	Example
+Request	http://localhost:8090/tpmRest/v1/participants/transports/all?participantName=partner1&protocolName=EZComm
+Response	{"result":[{"name":"file","type":"FILE"},{"name":"http","type":"HTTP"}]}
+This following example is to retrieve the reference value of the FileScriptFile property of a File transport named file under the EZComm protocol for partner Partner1:
+
+Note: The file content data object, FileScriptsFile, without suffix, TPM REST API processes the request as retrieving file content data object with .reference suffix.
+HTTP Message Type	Example
+Request	http://localhost:8090/tpmRest/v1/participants/transportPropertyValues?participantName=partner1&protocolName=EZComm& transportName=file&names=["FileScriptsFile"]
+Response	
+{"result":["c:/temp/rest/db.properties"]}
+Note: TPM REST API responds with the according file content reference.
+This following example is to retrieve the reference value of the FileScriptFile property of a File transport named file under the EZComm protocol for partner Partner1:
+
+Note: The file content data object, FileScriptsFile, with explicit .reference suffix, TPM REST API responds with the according file content reference.
+HTTP Message Type	Example
+Request	http://localhost:8090/tpmRest/v1/participants/transportPropertyValues?participantName=partner1 &protocolName=EZComm&transportName=file&names=["FileScriptsFile.reference"]
+Response	{"result":["c:/temp/rest/db.properties"]}
+Note: TPM REST API responds with the according file content reference.
+This following example is to retrieve the content value of the FileScriptFile property of a File transport named file under the EZComm protocol for partner Partner1:
+
+Note: The file content data object, FileScriptsFile, with explicit .content suffix, TPM REST API responds with the file content.
+HTTP Message Type	Example
+Request	http://localhost:8090/tpmRest/v1/participants/transportPropertyValues?participantName=partner1 &protocolName=EZComm&transportName=file&names=["FileScriptsFile.content"]
+Response	{"result":["ZGIuZHJpdmVyPW9yYWNsZS5qZGJjLk9yYWNsZURyaXZlcg0KZGIudXJsPWpkYmM6b3JhY2xlOnRoaW46QHRhbnRvbnk tZHQ6MTUyMTpYRQ0KZGIudXNlcj1iYw0KZGIucGFzc3dvcmQ9YmM="]}
+Note: TPM REST API responds with the file content.
+This following example is to retrieve the private key with alias name bcpartner1_key.p12 of partner Partner1 in PKCS format:
+
+Note: The file content data object, alias name is bcpartner1_key.p12 private key, is in Base64 format.
+HTTP Message Type	Example
+Request	http://localhost:8090/tpmRest/v1/participants/privateKeyCredential?participantName=partner1&format=PKCS12 &alias=bcpartner1_key.p12
+Response	{"result":{"alias":"bcpartner1_key.p12","creationDate":null, "dn":"cn=Trading Partner One,ou=BusinessConnect Server (only for TEST purposes),o=TIBCO Software Inc.,l=Palo Alto, st=California,c=US serial #7a3ed2ea20", "encryptionAlgorithm":0,"encryptionKeyFingerprint":"","encryptionKeyID":"","encryptionKeyLength":0, "expiryDate":{"date":31,"day":2,"hours":10,"minutes":52,"month":11,"seconds":13,"time":1735671133000, "timezoneOffset":480,"year":124}, "password":"IRbb9HE1NlLhs+HyIQ1jQ8Fg9FfC+hxnAgSCfUKB7xPe1xNUDKF/w==", "priCredContent":"MIIOQQIBAzCCDgcGCSqGSIb3DQEHAaCCDfgEgg30MIIN8DCCAukGCSqGSIb3DQEHAaCCAtoEggLWMIIC0jCCAs4GCyqGSIb3DQEM CgECoIICpjCCAqIwHAYKKoZIhvcNAQwBAzAOBAh/g3eJa5dMVQICB9AEggKAmwKc9/j/bZjAkGauBJo1yYeWOYsbB2iq6FDe0o+/HitTzIiWPJyLfOnO4G Y6me2qtcXF6d7Yx6qN3W3xkGbLiUeYQtnnxMFtnkD1+DRqWKIXmo1r8loTZntyKPdenVPkmFri06Nmdc7zDyRIkncz9nmZT/+iJHkGvQsdtbDT+hrLz1yD zeyqX7YUdCavkToQ5W9S57lVxn4ajKup8Xr+=", "pubCredContent":"","shadowExpiryDate":null,"shadowName":"","signingAlgorithm":0,"signingKeyFingerprint":"", "signingKeyID":"","signingKeyLength":0,"type":"KCRED","updatedFileName":"bcpartner1_key.p12","userID":""}}
+Note: The file content data object, that is the PriCredContent, is in Base64 format as of: MIIOQQIBAzCCDgcGCSqGSIb3DQEHAaCCDfgEgg30MIIN8D CCAukGCSqGSIb3DQEHAaCCAtoEggLWMIIC0jCCAs4GCyqG SIb3DQEMCgECoIICpjCCAqIwHAYKKoZIhvcNAQwBAzAOBAh/ g3eJa5dMVQICB9AEggKAmwKc9/j/bZjAkGauBJo1yY eWOYsbB2iq6FDe0o+/HitTzIiWPJyLfOnO4GY6me2qtcXF 6d7Yx6qN3W3xkGbLiUeYQtnnxMFtnkD1+DRqWKIXmo1r8l oTZntyKPdenVPkmFri06Nmdc7zDyRIkncz9nmZT/+iJHkG vQsdtbDT+hrLz1yDzeyqX7YUdCavkToQ5W9S57lVxn4ajK up8Xr+=.
+PUT Method
+The RESTful HTTP Request PUT method is equivalent to Update functions and UPDATE SQL statement.
+
+The following is an example to update the certificate credential of a participant in a ConfigStore database.
+
+HTTP Message Type	Example
+Request	http://localhost:8090/rest/participants/certificatecredential?participantName=test &newAlias=new_cert&fileContent=MIIOQQIBAzC+==&fileName=bcpartner1_cert.p7b &shadowCertName=shadow_cert&getby=1389196800000&alias=cert
+Note: File content data object: MIIOQQIBAzC+== is in Base64 format.
+Response	
+Successful operation response: {"result":"Operate successfully"}
+Failed operation response: {"errorMessage":"XXXXXX"}
+DELETE Method
+The RESTful HTTP Request DELETE method is equivalent to Delete functions and DELETE SQL statement.
+
+The following is an example to delete a partner in ConfigStore database.
+
+HTTP Message Type	Example
+Request	http://localhost:8090/tpmRest/v1/participants/participant?name=new_participant
+Response	
+Successful operation response: {"result":"Operate successfully"}
+Failed operation response: {"errorMessage":"XXXXXX"}
