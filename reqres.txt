@@ -1,0 +1,34 @@
+GET https://<host>.eloqua.com/api/bulk/2.0/contacts/fields
+The response resembles:
+
+{
+    "count": 82,
+    "hasMore": false,
+    "items": [
+        {
+            "createdAt": "1900-01-01T05:00:00.0000000Z",
+            "dataType": "emailAddress",
+            "hasNotNullConstraint": false,
+            "hasReadOnlyConstraint": false,
+            "hasUniquenessConstraint": true,
+            "internalName": "C_EmailAddress",
+            "name": "Email Address",
+            "statement": "{{Contact.Field(C_EmailAddress)}}",
+            "updatedAt": "1900-01-01T05:00:00.0000000Z",
+            "uri": "/contacts/fields/100001"
+        },
+        {
+            "createdAt": "1900-01-01T05:00:00.0000000Z",
+            "dataType": "string",
+            "hasNotNullConstraint": false,
+            "hasReadOnlyConstraint": false,
+            "hasUniquenessConstraint": false,
+            "internalName": "C_FirstName",
+            "name": "First Name",
+            "statement": "{{Contact.Field(C_FirstName)}}",
+            "updatedAt": "2013-03-26T21:32:13.2530000Z",
+            "updatedBy": "Docs.Example",
+            "uri": "/contacts/fields/100002"
+        }
+   ]
+}
